@@ -1,0 +1,18 @@
+Q1:
+
+SSI - small Scale Integration
+MSI - medium Scale Integration
+LSI - Large Scale Integration
+VLSI - Very Large Scale Integration
+ULSI - Ultra Large Scale Integration
+
+Q2:
+
+NAND Gates are used in Burglar alarms
+They are used in computers/laptops
+They are used in street lights
+
+Q3:
+
+An analog signal is a continuous signal that represents physical measurements.
+Digital signals are time separated signals which are generated using digital modulation. 

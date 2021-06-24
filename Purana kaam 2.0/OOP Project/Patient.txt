@@ -1,0 +1,3 @@
+
+1	Yassir	18	0335	karachi	1
+2	Yasir	18	033	khi	1	cancer	critical	15/1/2003	panadol	1

@@ -1,0 +1,409 @@
+Task 1:
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+class Circle{
+	float radius,area,perim;
+	public:
+		Circle()
+		{
+			
+		}
+		Circle(float r)
+		{
+			radius=r;
+			area=3.142*pow(radius,2);
+			perim=2*3.142*radius;
+		}
+		float getArea()
+		{
+			return area;
+		}
+		float getPerimeter()
+		{
+			return perim;
+		}
+};
+
+int main()
+{
+	Circle obj(1);
+	
+	cout<<endl<<"Area: "<<obj.getArea()<<endl<<"Perimeter: "<<obj.getPerimeter();
+	
+	return 1;
+}
+
+Task 2:
+
+#include<iostream>
+
+using namespace std;
+
+class Account{
+	float balance;
+	public:
+		Account()
+		{
+			balance=0;
+		}
+		void Credit(float c)
+		{
+			balance+=c;
+		}
+		void Debit(float d)
+		{
+			balance-=d;
+		}
+		float Balance()
+		{
+			return balance;
+		}
+};
+
+int main()
+{
+	Account obj;
+	
+	obj.Credit(100);
+	cout<<endl<<"Balance after crediting 100: "<<obj.Balance()<<endl;
+	
+	obj.Debit(55);
+	cout<<endl<<"Balance after debiting 55: "<<obj.Balance()<<endl;
+	
+	
+	return 1;
+}
+
+Task 3:
+
+#include<iostream>
+
+using namespace std;
+
+class Invoice{
+	string numb,descrp;
+	int qty;
+	double prc,invoice;
+	public:
+		Invoice()
+		{
+			
+		}
+		Invoice(string n, string des, int q, double p)
+		{
+			numb=n;
+			descrp=des;
+			if(q<0)
+			{
+				q=0;
+			}
+			if(prc<0)
+			{
+				prc=0;
+			}
+			qty=q;
+			prc=p;
+		}
+		double getInvoiceAmount()
+		{
+			invoice=qty*prc;
+			return invoice;
+		}
+};
+
+int main()
+{
+	Invoice obj("A1","book ",5,3.25);
+	cout<<"Invoice amount: "<<obj.getInvoiceAmount();
+	
+	return 1;
+}
+
+Task 4:
+
+#include<iostream>
+
+using namespace std;
+
+class Books{
+	public:
+		string author,title,publisher;
+		float price;
+		int pos;
+		Books(string a, string t, string p, float prc, int po)
+		{
+			author=a;
+			title=t;
+			publisher=p;
+			price=prc;
+			pos=po;
+		}
+		int searchBook(string bn, string an)
+		{
+			if(title==bn)
+			{
+				if(author==an)
+				{
+					return 1;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		float amount(int s)
+		{
+			if(s<=pos)
+			{
+				pos-=s;
+				return price*s;
+			}
+			else
+			{
+				cout<<endl<<"Required copies not in stock"<<endl;
+			}
+		}
+		
+};
+
+int main()
+{
+	Books b[5]={Books("auth1","book1","publish1",10.5,3), Books("auth2","book2","publish2",10.5,3), Books("auth3","book3","publish3",10.5,3), Books("auth4","book4","publish4",10.5,0), Books("auth5","book5","publish5",10.5,3)};
+	string aname,bname;
+	int i,n;
+	
+	cout<<endl<<"Enter book name to find: ";
+	cin>>bname;
+	cout<<endl<<"Enter author name to find: ";
+	cin>>aname;
+	
+	for(i=0;i<5;i++)
+	{
+		if(b[i].searchBook(bname,aname))
+		{
+			cout<<endl<<"Book found"<<endl;
+			cout<<endl<<"Enter number of copies needed: ";
+			cin>>n;
+			cout<<endl<<"Total amount: "<<b[i].amount(n);
+			break;
+		}
+		else
+		{
+			cout<<endl<<"Book not found"<<endl;
+		}
+	}
+	
+	return 1;
+}
+
+Task 5:
+
+#include<iostream>
+
+using namespace std;
+
+class MenuItem{
+	public:
+		string name,type;
+		float price;
+		void setRecords(string n, string t, float p)
+		{
+			name=n;
+			type=t;
+			price=p;
+		}
+};
+
+class CoffeeShop{
+	public:
+		string name;
+		MenuItem items[4];
+		string orders[4];
+		string food[4],drinks[4];
+	
+		CoffeeShop()
+		{
+			
+		}
+		CoffeeShop(string sn, string in1, string t1, float p1, string in2, string t2, float p2, string in3, string t3, float p3, string in4, string t4, float p4)
+		{
+			name=sn;
+			items[0].setRecords(in1, t1, p1);
+			items[1].setRecords(in2, t2, p2);
+			items[2].setRecords(in3, t3, p3);
+			items[3].setRecords(in4, t4, p4);
+		}	
+	
+		int i,j;
+		void addOrder(string o)
+		{
+			int found=0;
+			for(i=0;i<4;i++)
+			{
+				if(items[i].name==o)
+				{
+					found=1;
+					break;
+				}
+			}
+			if(found)
+			{
+				for(i=0;i<4;i++)
+				{
+					if(orders[i]=="")
+					{
+						orders[i]=o;
+						break;
+					}
+				}
+			}
+			else
+			{
+				cout<<endl<<"This item is currently unavailable!"<<endl;
+			}
+		}
+		void fulfillOrder()
+		{
+			for(i=0;i<4;i++)
+			{
+				if(orders[i]!="")
+				{
+					cout<<endl<<"The "<<orders[i]<<" is ready"<<endl;
+				}
+			}
+			if(i==4)
+			{
+				cout<<endl<<"All orders have been fulfilled!"<<endl;
+			}
+		}
+		string* listOrders()
+		{
+			return &orders[0];
+		}
+		float dueAmount()
+		{
+			float amount=0;
+			for(i=0;i<4;i++)
+			{
+				for(j=0;j<4;j++)
+				{
+					if(orders[i]==items[j].name)
+					{
+						amount+=items[j].price;
+						break;
+					}
+				}
+			}
+			return amount;
+		}
+		string cheapestItem()
+		{
+			float cheap=items[0].price;
+			for(i=0;i<4;i++)
+			{
+				if(items[i].price<cheap)
+				{
+					cheap=items[i].price;
+				}
+			}
+			for(i=0;i<4;i++)
+			{
+				if(items[i].price==cheap)
+				{
+					return items[i].name;
+				}
+			}
+		}
+		string* drinksOnly()
+		{
+			for(i=0;i<4;i++)
+			{
+				if(items[i].type=="Drink")
+				{
+					for(j=0;j<4;j++)
+					{
+						if(drinks[j]=="")
+						{
+							drinks[j]=items[i].name;
+							break;
+						}
+					}
+				}
+			}
+			return drinks;
+		}
+		string* foodOnly()
+		{
+			for(i=0;i<4;i++)
+			{
+				if(items[i].type=="Food")
+				{
+					for(j=0;j<4;j++)
+					{
+						if(food[j]=="")
+						{
+							food[j]=items[i].name;
+							break;
+						}
+					}
+				}
+			}
+			return food;
+		}
+		
+		
+};
+
+int main()
+{
+	CoffeeShop obj("Coffe Shp","Food Item1","Food",50,"Drink Item1","Drink",10,"Food Item2","Food",500,"Drink Item2","Drink",100);
+	
+	string *ptr,*fptr,*dptr;
+	int i;
+	
+	obj.addOrder("Food Item1");
+	obj.addOrder("Drink Item2");
+	
+	obj.fulfillOrder();
+	
+	ptr=obj.listOrders();
+	
+	cout<<endl<<"Orders list: "<<endl;
+	
+	for(i=0;i<4;i++)
+	{
+		if(ptr[i]!="")
+		cout<<endl<<ptr[i]<<endl;
+	}
+	
+	cout<<endl<<"Amount due: "<<obj.dueAmount()<<endl;
+	
+	cout<<endl<<"Cheapest item: "<<obj.cheapestItem()<<endl;
+	
+	fptr=obj.foodOnly();
+	dptr=obj.drinksOnly();
+	
+	cout<<endl<<"Food Only:"<<endl;
+	for(i=0;i<4;i++)
+	{
+		if(fptr[i]!="")
+		cout<<endl<<fptr[i]<<endl;
+	}
+	
+	cout<<endl<<"Drinks Only:"<<endl;
+	for(i=0;i<4;i++)
+	{
+		if(dptr[i]!="")
+		cout<<endl<<dptr[i]<<endl;
+	}
+	
+	return 1;
+}

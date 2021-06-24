@@ -1,0 +1,44 @@
+SR Latch
+
+
+Inputs 	Outputs 		Comments
+
+S R 	Q 		Q’
+
+0 0 	Latch 	Latch	No Change
+0 1 	0 		1 		RESET
+1 0 	1 		0		SET
+1 1 	0 		0		Invalid
+
+
+
+
+Gated SR Latch
+
+
+Inputs 		Outputs 	Comments
+
+S R E 	Q 		Q’
+
+0 0 1 	Latch 	Latch	No Change
+0 1 1 	0 		1 		RESET
+1 0 1	1 		0		SET
+1 1 1	0 		0		Invalid
+0 0 0 	Latch 	Latch	No Change
+0 1 0 	0 		1 		No Change
+1 0 0	1 		0		No Change
+1 1 0	0 		0		No Change
+
+
+
+
+Gated D Latch
+
+
+Inputs 		Outputs 	Comments
+
+E D 		Q Q’
+
+1 0 		0 1 		SET
+1 1 		1 0 		RESET
+0 X 		Q0 Q0’ 		No Change

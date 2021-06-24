@@ -1,0 +1,203 @@
+Q1:
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+	string String="string";
+	
+	ifstream Read("File1.txt");
+	ofstream Write("File1.txt");
+	
+	Write<<String;
+	Write.close();
+	
+	char c;
+	
+	while(!Read.eof())
+	{
+		cout<<c;
+		Read.get(c);
+	}
+	Read.close();
+	
+	return 0;
+}
+
+
+
+Q2:
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+	ifstream Read("File1.txt");
+	ofstream Write("Copy.txt");
+	char c;
+	while(!Read.eof())
+	{
+		if(c!='\0')
+		Write<<c;
+		Read>>c;
+	}
+	Read.close();
+	Write.close();
+}
+
+
+
+Q3:
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Person{
+	public:
+		int age;
+		string name;
+		Person()
+		{
+		}
+		Person(int a, string n)
+		{
+			age=a;
+			name=n;
+		}
+};
+
+int main()
+{
+	Person person1(18,"Yasir"),person2;
+	ofstream Write("person.bin");
+	Write.write((char*)(&person1),sizeof(person1));
+	Write.close();
+	
+	ifstream Read("person.bin",ios::binary);
+	Read.read((char*)(&person2),sizeof(person2));
+	cout<<person2.age<<endl<<person2.name;
+	Read.close();
+	return 0;
+}
+
+
+
+Q4:
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Participant{
+	public:
+		string name;
+		int ID,score;
+		void Input()
+		{
+			ofstream Write("participant.dat");
+			cout<<"Enter name: ";
+			cin>>name;
+			cout<<"Enter ID: ";
+			cin>>ID;
+			cout<<"Enter score: ";
+			cin>>score;
+			Write.write((char*)(this),sizeof(Participant));
+			Write.close();
+		}
+		
+		void Output()
+		{
+			ifstream Read("participant.dat");
+			Participant obj;
+			int id;
+			bool found = 0;
+			cout<<endl<<"Enter ID of participant to find: ";
+			cin>>id;
+			while(!found)
+			{
+				Read.read((char*)(&obj),sizeof(Participant));
+				if(obj.ID==id)
+				{
+					found=1;
+					cout<<"Information:\n-----------------------------------\n"<<obj.ID<<"\t"<<obj.name<<"\t"<<obj.score;
+				}
+			}
+			Read.close();
+		}
+		
+		void Max()
+		{
+			int max=0;
+			ifstream Read("participant.dat");
+			Participant obj;
+			bool found = 0;
+			while(!Read.eof())
+			{
+				Read.read((char*)(&obj),sizeof(Participant));
+				if(obj.score>max)
+				{
+					max=obj.score;
+				}
+			}
+			cout<<endl<<"Maximum score: "<<max;
+			Read.close();
+		}
+};
+
+int main()
+{
+	Participant obj;
+	obj.Input();
+	obj.Input();
+	obj.Output();
+	obj.Max();
+	
+	return 0;
+}
+
+
+
+Q6:
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+	ifstream Read("Story.txt");
+	
+	char c;
+	int no=0;
+	Read.get(c);
+	if(c!='A')
+	{
+		no++;
+	}
+	while(!Read.eof())
+	{
+		if(c=='\n')
+		{
+			Read.get(c);
+			if(c!='A')
+			{
+				no++;
+			}
+		}
+		Read.get(c);
+	}
+	
+	cout<<endl<<"Number of lines not starting with 'A' are: "<<no;
+	
+	return 0;
+}

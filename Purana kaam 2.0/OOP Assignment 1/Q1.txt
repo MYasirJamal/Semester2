@@ -1,0 +1,77 @@
+Task 1:
+
+Reigon
+Country
+Incharge
+Daily expense
+Amount sold
+Amount left
+Gross Profit
+Profit/Loss
+
+Task 2:
+
+Daily expense
+Gross Profit
+Profit/Loss
+
+Task 3:
+
+class dailyProfit{
+	private:
+	float gross_profit,expense,net_profit;
+
+	public:
+		dailyProfit()
+		{
+			gross_profit=0;
+			net_profit=0;
+			expense=0;
+			//Profit and expense at the start of the day is zero
+		}
+		dailyProfit(float g, float e)
+		{
+			gross_profit=g;
+			expense=e;
+			//For assigning values at the time of creation of object
+			calculateNetProfit();
+			//Automatically updates net profit, no need to call separately from main
+		}
+
+		//Setters:
+		void setGrossProfit(float gp)
+		{
+			gross_profit=gp;
+		}
+		void setExpense(float ex)
+		{
+			expense=ex;
+		}
+
+		//Calculation for net profit:
+		void calculateNetProfit()
+		{
+			net_profit=gross_profit-expense;	//Formula for calculating net profit
+		}
+
+		//Getters:
+		float getGrossProfit()
+		{
+			return gross_profit;
+		}
+		float getNetProfit()
+		{
+			return net_profit;
+		}
+		float getExpense()
+		{
+			return expense;
+		}
+
+		//Display details of daily expensiture and profit using a function rather than using cout/cin in main
+		void printProfitReport()
+		{
+			cout<<endl<<"Profit for the day:"<<getNetProfit<<endl;
+			cout<<endl<<"Expense for the day:"<<getExpense<<endl;
+		}
+};

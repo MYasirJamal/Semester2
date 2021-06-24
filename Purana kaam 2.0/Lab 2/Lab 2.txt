@@ -1,0 +1,381 @@
+Task 1:
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+float residential(int num_premium);
+float business(int num_premium, int num_connect);
+int main()
+{
+	float bill;
+	int acc_num,cus_code,no_prem,no_conn;
+	char type;
+	
+	cout<<endl<<"Enter account number: ";
+	cin>>acc_num;
+	
+	cout<<endl<<"Enter customer code: ";
+	cin>>cus_code;
+	
+	cout<<"R - Resident"<<endl<<"B - Business"<<endl;
+	cout<<endl<<endl<<"Enter type of connection (R/B): ";
+	cin>>type;
+	
+	cout<<endl<<"Enter number of premium channels: ";
+	cin>>no_prem;
+	
+	if(type=='B'||type=='b')
+	{
+		cout<<endl<<"Enter number of basic service connections: ";
+		cin>>no_conn;
+	}
+	
+	if(type=='B'||type=='b')
+	{
+		bill = business(no_prem,no_conn);
+	}
+	else if(type=='R'||type=='r')
+	{
+		bill = residential(no_prem);
+	}
+	else
+	{
+		cout<<endl<<"Invalid type entered";
+	}
+	
+	cout<<endl<<endl<<endl<<"Account number: "<<acc_num<<endl;
+	cout<<endl<<"Total amount: $"<<bill;
+	return 1;
+}
+float residential(int num_premium)
+{
+	float bill=0,prcs_fee=4.50,bas_srvc=20.50,premium=7.50;
+	bill += prcs_fee + bas_srvc + (num_premium * premium);
+	return bill;
+}
+float business(int num_premium, int num_connect)
+{
+	float bill=0,prcs_fee=15.00,bas_srvc=75.00,premium=50.00;
+	bill += prcs_fee + (num_premium * premium);
+	if(num_connect<=10)
+	{
+		bill += num_connect * bas_srvc;
+	}
+	else
+	{
+		bill += 750 + 5 * (num_connect - 10);
+	}
+	return bill;
+}
+
+Task 2:
+
+#include<iostream>
+using namespace std;
+
+int showChoices();
+
+int metersAndCentTofeetAndInches(int meters, int centi, int &feet, int &inches);
+
+int feetAndInchesToMetersAndCent(int feet, int inches, int &meters, int &centi);
+
+int main()
+{
+	int choice,in1,in2,out1,out2;
+	do
+	{
+		choice=showChoices();
+		if(choice==1)
+		{
+			cout<<endl<<"Enter number of feet: ";
+			cin>>in1;
+			
+			cout<<endl<<"Enter number of inches: ";
+			cin>>in2;
+			
+			feetAndInchesToMetersAndCent(in1,in2,out1,out2);
+			
+			cout<<endl<<endl<<"Result"<<endl<<endl<<"Meters: "<<out1<<endl;
+			cout<<"Centimeters: "<<out2<<endl<<endl<<endl;
+		}
+		else if(choice==2)
+		{
+			cout<<endl<<"Enter number of meters: ";
+			cin>>in1;
+			
+			cout<<endl<<"Enter number of centimeters: ";
+			cin>>in2;
+			
+			metersAndCentTofeetAndInches(in1,in2,out1,out2);
+			
+			cout<<endl<<endl<<"Result"<<endl<<endl<<"Feet: "<<out1<<endl;
+			cout<<"Inches: "<<out2<<endl<<endl<<endl;
+		}
+	}while(choice!=3);
+	
+	
+	return 1;
+}
+
+int showChoices()
+{
+	int choice;
+	cout<<endl<<"1. Convert feet and inches to meters and centimeters";
+	cout<<endl<<"2. Convert meters and centimeters to feet and inches";
+	cout<<endl<<"3. Exit"<<endl;
+	cout<<endl<<"Select option: ";
+	cin>>choice;
+	
+	return choice;
+}
+
+int metersAndCentTofeetAndInches(int meters, int centi, int &feet, int &inches)
+{
+	centi+=meters*100;
+	inches=centi/2.54;
+	feet=inches/12;
+	inches-=feet*12;
+	return 1;
+}
+
+int feetAndInchesToMetersAndCent(int feet, int inches, int &meters, int &centi)
+{
+	inches+=feet*12;
+	centi=inches*2.54;
+	meters=centi/100;
+	centi-=meters*100;
+	return 1;
+}
+
+Task 3:
+
+#include<iostream>
+using namespace std;
+
+float calculateRegular(int minutes);
+
+float calculatePremium(int minutes_1, int minutes_2);
+
+int main()
+{
+	int acc_no,corr=0,reg_min,prem_am_pm,prem_pm_am,no_min;
+	float amount_due;
+	char srvc_typ;
+	
+	cout<<endl<<"Enter account number: ";
+	cin>>acc_no;
+	
+	do{
+		cout<<endl<<endl<<"R - Regular"<<endl<<"P - Premium"<<endl<<endl<<"Enter type of service: ";
+		cin>>srvc_typ;
+		
+		if(srvc_typ=='R' || srvc_typ=='r' || srvc_typ=='P' || srvc_typ=='p')
+		corr=1;
+		else
+		cout<<"Error - Choose from the options above"<<endl;
+	}while(!corr);
+	
+	if(srvc_typ=='R' || srvc_typ=='r')
+	{
+		cout<<"Enter number of minutes service was used: ";
+		cin>>reg_min;
+		
+		no_min=reg_min;
+		
+		amount_due=calculateRegular(reg_min);
+	}
+	else if(srvc_typ=='P' || srvc_typ=='p')
+	{
+		cout<<endl<<"Enter number of minutes the service was used during the day: ";
+		cin>>prem_am_pm;
+		
+		cout<<endl<<"Enter number of minutes the service was used during the night: ";
+		cin>>prem_pm_am;
+		
+		no_min=prem_am_pm+prem_pm_am;
+		
+		amount_due = calculatePremium(prem_am_pm,prem_pm_am);
+	}
+	
+	cout<<endl<<"----------------------------------------------------------------------------------------------"<<endl;
+	cout<<endl<<"Account number: "<<acc_no<<endl;
+	
+	cout<<endl<<"Type of service: ";
+	if(srvc_typ=='R' || srvc_typ=='r')
+	cout<<"Regular"<<endl;
+	else
+	cout<<"Premium"<<endl;
+	
+	cout<<endl<<"Number of minutes the telephone service was used: "<<no_min<<endl;
+	
+	cout<<endl<<"Amount due: "<<amount_due<<endl;
+	
+	
+	return 1;
+}
+
+float calculateRegular(int minutes)
+{
+	float total=0;
+	
+	total = 10;
+	
+	if(minutes>50)
+	{
+		total += 0.2 * (minutes - 50);
+	}
+	
+	return total;
+}
+
+float calculatePremium(int minutes_1, int minutes_2)
+{
+	float total=0;
+	
+	total += 25;
+	
+	if(minutes_1>75)
+	{
+		total += 0.1 * (minutes_1 - 75);
+	}
+	
+	if(minutes_2>100)
+	{
+		total += 0.05 * (minutes_2 - 100);
+	}
+	
+	return total;
+}
+
+Task 4:
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+float distance(int x1,int y1,int x2,int y2);
+
+float radius(int x1,int y1,int x2,int y2);
+
+float circumference(float r);
+
+float area(float r);
+
+int main()
+{
+	float rad,cir,a;
+	int point_x,point_y,center_x,center_y;
+	
+	cout<<endl<<"Enter x-coordinate of point: ";
+	cin>>point_x;
+	cout<<endl<<"Enter y-coordinate of point: ";
+	cin>>point_y;
+	
+	cout<<endl<<"Enter x-coordinate of center: ";
+	cin>>center_x;
+	cout<<endl<<"Enter y-coordinate of center: ";
+	cin>>center_y;
+	
+	rad=radius(point_x,point_y,center_x,center_y);
+	
+	cir=circumference(rad);
+	
+	a=area(rad);
+	
+	cout<<endl<<"Radius: "<<rad<<endl;
+	
+	cout<<endl<<"Circumference: "<<cir<<endl;
+	
+	cout<<endl<<"Area: "<<a<<endl;
+	
+	return 1;
+}
+
+float distance(int x1,int y1,int x2,int y2)
+{
+	float dist;
+	dist = sqrt(pow((x2-x1),2)+pow((y2-y1),2));
+	return dist;
+}
+
+float radius(int x1,int y1,int x2,int y2)
+{
+	float rad;
+	rad = distance(x1,y1,x2,y2);
+	return rad;
+}
+
+float circumference(float r)
+{
+	return 2*r;
+}
+
+float area(float r)
+{
+	return 3.1416*pow(r,2);
+}
+
+Task 5:
+
+#include<iostream>
+using namespace std;
+
+float calculateBill(float hourly_rate, int consul_time, char low_income);
+
+int main()
+{
+	int time,corr=0;
+	float hour_rate,bill;
+	char is_low;
+	
+	cout<<endl<<"Enter hourly rate: ";
+	cin>>hour_rate;
+	
+	cout<<endl<<"Enter total consulting time (minutes): ";
+	cin>>time;
+	
+	do{
+		cout<<endl<<"Does the person have low income? (Y/N): ";
+		cin>>is_low;
+		if(is_low=='Y' || is_low=='y' || is_low=='N' || is_low=='n')
+		corr=1;
+		else
+		cout<<endl<<"Enter Y or N";
+	}while(!corr);
+	
+	bill=calculateBill(hour_rate,time,is_low);
+	
+	cout<<endl<<endl<<"Billing amount: $"<<bill;
+	
+	return 1;
+}
+
+float calculateBill(float hourly_rate, int consul_time, char low_income)
+{
+	float bill,prcnt;
+	
+	if(low_income=='Y' || low_income=='y')
+	{
+		if(consul_time<=30)
+		consul_time=0;
+		else
+		consul_time-=30;
+		prcnt=0.4;
+	}
+	else if(low_income=='N' || low_income=='n')
+	{
+		if(consul_time<=20)
+		consul_time=0;
+		else
+		consul_time-=20;
+		prcnt=0.7;
+	}
+	
+	bill = hourly_rate * prcnt * (consul_time/60.0);
+	
+	return bill;
+}
+
+
+
